@@ -1,0 +1,29 @@
+{
+  "name": "image-exporter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheChipmunks/mobile-image-exporter-api.git"
+  },
+  "author": "CodingChipmunks",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheChipmunks/mobile-image-exporter-api/issues"
+  },
+  "homepage": "https://github.com/TheChipmunks/mobile-image-exporter-api#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "request": "^2.88.0"
+  }
+}

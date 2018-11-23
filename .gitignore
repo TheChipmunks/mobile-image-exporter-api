@@ -1,0 +1,4 @@
+.idea/
+process.env
+node_modules/
+uploads/
