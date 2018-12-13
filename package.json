@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm start"
+    "babel-node": "babel-node --presets=latest",
+    "start": "nodemon --exec npm run babel-node -- ./index.js",
+    "serve": "babel-node --presets=latest ./index.js"
   },
   "repository": {
     "type": "git",
@@ -17,13 +19,22 @@
   },
   "homepage": "https://github.com/TheChipmunks/mobile-image-exporter-api#readme",
   "dependencies": {
+    "babel-register": "^6.26.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "formidable": "^1.2.1",
     "fs": "0.0.1-security",
+    "mysql": "^2.16.0",
     "path": "^0.12.7",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-spread": "^7.0.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1"
   }
 }
