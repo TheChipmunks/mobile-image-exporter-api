@@ -13,6 +13,13 @@ const setCredentials = async ({ data }) =>
 
 const FormParse = async ({form, req}) =>
     new Promise((res, rej) => {
+        if (!req.headers['x-device-id'] && req.headers['x-device-id'] == '') {
+            res({
+                status: false,
+                message: 'Device ID is required'
+            });
+        }
+
         form.parse(req, function (err, fields) {
             if (err) {
                 res({
@@ -21,7 +28,7 @@ const FormParse = async ({form, req}) =>
                 });
             }
 
-            var device_id = fields.device_id;
+            var device_id = req.headers['x-device-id'];
             var access_key = fields.access_key;
             var secret_key = fields.secret_key;
             var bucket = fields.bucket;

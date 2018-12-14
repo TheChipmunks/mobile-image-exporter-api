@@ -1,25 +1,21 @@
-// import S3Client from 'aws-s3';
-// import { uploadFile } from 'aws-s3';
-//
-// const S3Connect = (file) =>
-//
-// const config = {
-//     bucketName: 'myBucket',
-//     dirName: 'photos', /* optional */
-//     region: 'eu-west-1',
-//     accessKeyId: 'ANEIFNENI4324N2NIEXAMPLE',
-//     secretAccessKey: 'cms21uMxçduyUxYjeg20+DEkgDxe6veFosBT7eUgEXAMPLE',
-// }
-// S3Client
-//     .uploadFile(file, config)
-//     .then(data => console.log(data))
-//     .catch(err => console.error(err))
-//
-//
-// export default {
-//    async S3Client() {
-//        const client = await S3Connect();
-//        return client;
-//    }
-// };
-//
+import database from "../config/database";
+
+const getCredentials = async ({ device_id }) =>
+    new Promise((res, rej) => {
+        database.pool.query(
+            `SELECT * FROM users_credentials 
+        WHERE device_id='${device_id}'`,
+            (error, result) => {
+                if (error) rej({ status: 500, message: error });
+                else res(result);
+            }
+        );
+    });
+
+
+export default {
+    async getCredentials({ device_id }) {
+        return await getCredentials({ device_id });
+    },
+};
+

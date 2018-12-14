@@ -19,7 +19,7 @@ router.post(
 
             await authController.putCredentials({ data} );
 
-            res.status(202);
+            res.status(202).json();
         } catch (error) {
             next(error);
         }

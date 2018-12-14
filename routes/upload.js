@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import formidable from 'formidable';
+import uploadController from '../controllers/upload';
 import AWS from 'aws-sdk'
 
 const router = Router();
@@ -8,6 +9,23 @@ router.post(
     '/',
     async (req, res, next) => {
         try {
+            if (!req.headers['x-device-id'] && req.headers['x-device-id'] == '') {
+                res({
+                    status: false,
+                    message: 'Device ID is required'
+                });
+            }
+
+            var device_id = req.headers['x-device-id'];
+
+            const data = await uploadController.getCredentials({device_id});
+
+            if (!data[0]){
+                return res.status(404).json({ status: false, message: 'Not such Device ID' });
+            }
+
+            const credentials = data;
+
             let form = new formidable.IncomingForm();
             form.parse(req, function (err, fields, files) {
                 if (!files.image) {
@@ -21,9 +39,9 @@ router.post(
                 var fileName = files.image.name;
 
                 const params = {
-                    region: 'eu-central-1',
-                    accessKeyId: 'AKIAJ6VOI6YYN65YG2TA',
-                    secretAccessKey: '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',
+                    region: credentials.region,
+                    accessKeyId: credentials.access_key,
+                    secretAccessKey: credentials.secret_key,
                 };
 
                 const s3 = new AWS.S3(params);
@@ -31,7 +49,7 @@ router.post(
                 const uploadFile = () => {
                     if (err) throw err;
                     const params = {
-                        Bucket: 'comroads',
+                        Bucket: credentials.bucket,
                         Key: fileName,
                         Body: JSON.stringify(filePath, null, 2)
                     };
@@ -50,7 +68,6 @@ router.post(
                 };
                 uploadFile();
             });
-            // });
         } catch (error) {
             next(error);
         }
