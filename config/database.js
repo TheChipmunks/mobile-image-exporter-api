@@ -14,6 +14,7 @@ const dbConnection = class {
 
 	createDBPool() {
 		this.pool = mysql.createPool({
+			timezone: 'UTC',
 			host: HOST,
 			user: USER,
 			port: PORT,

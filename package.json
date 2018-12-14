@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/TheChipmunks/mobile-image-exporter-api#readme",
   "dependencies": {
+    "aws-sdk": "^2.376.0",
     "babel-register": "^6.26.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",

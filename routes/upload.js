@@ -1,7 +1,6 @@
 import {Router} from 'express';
 import formidable from 'formidable';
-import fs from 'fs';
-import config from '../config/config';
+import AWS from 'aws-sdk'
 
 const router = Router();
 
@@ -12,29 +11,46 @@ router.post(
             let form = new formidable.IncomingForm();
             form.parse(req, function (err, fields, files) {
                 if (!files.image) {
-                    return res.json({
+                    return res.status(400).json({
                         status: false,
                         message: 'Select any image'
                     });
                 }
 
-                var dir = config.filePath;
-                if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir);
-                }
+                var filePath = files.image.path;
+                var fileName = files.image.name;
 
-                var oldpath = files.image.path;
-                var newpath = dir + files.image.name;
-                fs.rename(oldpath, newpath, function (err) {
-                    if (err) {
-                        throw err;
-                    }
-                    res.json({
-                        status: true,
-                        message: 'File uploaded!'
+                const params = {
+                    region: 'eu-central-1',
+                    accessKeyId: 'AKIAJ6VOI6YYN65YG2TA',
+                    secretAccessKey: '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',
+                };
+
+                const s3 = new AWS.S3(params);
+
+                const uploadFile = () => {
+                    if (err) throw err;
+                    const params = {
+                        Bucket: 'comroads',
+                        Key: fileName,
+                        Body: JSON.stringify(filePath, null, 2)
+                    };
+                    s3.upload(params, function (s3Err, data) {
+                        if (s3Err) {
+                            return res.status(400).json({
+                                status: false,
+                                message: s3Err
+                            });
+                        }
+                        return res.status(202).json({
+                            status: true,
+                            message: `File uploaded successfully at ${data.Location}`
+                        });
                     });
-                });
+                };
+                uploadFile();
             });
+            // });
         } catch (error) {
             next(error);
         }

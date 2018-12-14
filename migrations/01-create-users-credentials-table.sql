@@ -1,0 +1,9 @@
+CREATE TABLE users_credentials(
+id INT(11) auto_increment NOT NULL primary key ,
+	device_id VARCHAR(120) DEFAULT NULL ,
+	access_key VARCHAR(120) DEFAULT NULL ,
+	secret_key VARCHAR(250) DEFAULT NULL ,
+	buket VARCHAR(100) DEFAULT NULL ,
+	region VARCHAR(50) DEFAULT NULL ,
+	date_added DATETIME DEFAULT NULL
+)ENGINE=MyISAM DEFAULT CHARSET=utf8;

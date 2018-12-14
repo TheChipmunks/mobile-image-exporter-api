@@ -8,11 +8,11 @@ export default {
 			USER: process.env.DB_USER || 'root',
 			PORT: process.env.DB_PORT || 3306,
 			PASS: process.env.DB_PASS || '',
-			NAME: process.env.DB_NAME || 'homestead',
+			NAME: process.env.DB_NAME || 'amazon_image_exporter',
 			CONNECTION_LIMIT: process.env.DB_CONNECTION_LIMIT || 100
 		},
 
-		PORT: process.env.PORT || 3000,
+		PORT: process.env.PORT || 7666,
 		API_VERSION: `/api`,
 	}
 };
